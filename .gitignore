@@ -1,0 +1,57 @@
+# Python virtual environments and caches
+venv/
+.venv/
+env/
+.env/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# AI Service datasets, runs, and weights
+ai_service/data/
+!ai_service/data/data.yaml
+ai_service/detected_images/*
+!ai_service/detected_images/.gitkeep
+ai_service/uploaded_images/*
+!ai_service/uploaded_images/.gitkeep
+ai_service/runs/
+ai_service/models/best.pt
+ai_service/yolov8n.pt
+*.pt
+*.onnx
+*.engine
+*.pb
+
+# Java/Maven outputs
+backend/target/
+**/target/
+backend/.idea/
+backend/*.iml
+backend/*.log
+*.log
+
+# Node/React outputs
+frontend/node_modules/
+**/node_modules/
+frontend/build/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# IDEs & System files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
