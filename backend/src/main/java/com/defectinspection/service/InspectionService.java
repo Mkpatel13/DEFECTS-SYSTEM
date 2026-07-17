@@ -102,4 +102,15 @@ public class InspectionService {
 
         return new DashboardStats(total, defectiveCount, defectRate, distribution);
     }
+
+    public void deleteInspection(Long id) {
+        if (!inspectionRepository.existsById(id)) {
+            throw new IllegalArgumentException("Inspection not found with id: " + id);
+        }
+        inspectionRepository.deleteById(id);
+    }
+
+    public void deleteAllInspections() {
+        inspectionRepository.deleteAll();
+    }
 }

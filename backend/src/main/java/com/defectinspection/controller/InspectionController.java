@@ -55,4 +55,35 @@ public class InspectionController {
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productRepository.findAll());
     }
+
+    @DeleteMapping("/inspections/{id}")
+    public ResponseEntity<?> deleteInspection(@PathVariable Long id, 
+                                              @RequestHeader(value = "Authorization", required = false) String authHeader) {
+        if (authHeader == null || !authHeader.equals("Bearer admin-secret-session-token")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(java.util.Map.of("message", "Unauthorized: Admin role required"));
+        }
+        try {
+            inspectionService.deleteInspection(id);
+            return ResponseEntity.ok().body(java.util.Map.of("message", "Inspection history record deleted successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(java.util.Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(java.util.Map.of("message", "Failed to delete inspection: " + e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/inspections")
+    public ResponseEntity<?> deleteAllInspections(@RequestHeader(value = "Authorization", required = false) String authHeader) {
+        if (authHeader == null || !authHeader.equals("Bearer admin-secret-session-token")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(java.util.Map.of("message", "Unauthorized: Admin role required"));
+        }
+        try {
+            inspectionService.deleteAllInspections();
+            return ResponseEntity.ok().body(java.util.Map.of("message", "All inspection history records deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(java.util.Map.of("message", "Failed to clear inspection history: " + e.getMessage()));
+        }
+    }
 }
