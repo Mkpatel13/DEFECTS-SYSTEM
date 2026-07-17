@@ -1,3 +1,5 @@
+# Copyright (C) 2026 Satyam. All rights reserved.
+
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.staticfiles import StaticFiles
 from app.schemas import DetectionResult

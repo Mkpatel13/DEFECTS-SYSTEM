@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2026 Satyam. All rights reserved.
+ */
+
 package com.defectinspection;
 
 import org.springframework.boot.SpringApplication;

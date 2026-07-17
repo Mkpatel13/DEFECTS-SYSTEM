@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2026 Satyam. All rights reserved.
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
