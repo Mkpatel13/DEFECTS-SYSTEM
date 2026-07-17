@@ -40,3 +40,50 @@ export const submitInspection = async (productId, file) => {
   }
   return response.json();
 };
+
+export const loginAdmin = async (username, password) => {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || "Invalid credentials");
+  }
+  return response.json();
+};
+
+export const deleteInspection = async (id, token) => {
+  const response = await fetch(`${BASE_URL}/inspections/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to delete inspection");
+  }
+  return response.json();
+};
+
+export const clearInspectionHistory = async (token) => {
+  const response = await fetch(`${BASE_URL}/inspections`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || "Failed to clear inspection history");
+  }
+  return response.json();
+};
+

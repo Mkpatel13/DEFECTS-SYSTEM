@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { ShieldCheck, ShieldAlert, Image, X } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Image, X, Trash2 } from 'lucide-react';
 
-const InspectionTable = ({ inspections }) => {
+const InspectionTable = ({ inspections, isAdmin, onDeleteInspection, onClearHistory }) => {
   const [activeImage, setActiveImage] = useState(null);
 
   const formatDate = (dateStr) => {
@@ -12,7 +12,15 @@ const InspectionTable = ({ inspections }) => {
 
   return (
     <div className="table-container">
-      <h2 className="card-title">Recent Inspection History</h2>
+      <div className="table-header-flex">
+        <h2 className="card-title">Recent Inspection History</h2>
+        {isAdmin && inspections.length > 0 && (
+          <button onClick={onClearHistory} className="btn-clear-all" title="Clear all inspection history">
+            <Trash2 className="badge-icon" />
+            <span>Clear History</span>
+          </button>
+        )}
+      </div>
       {inspections.length === 0 ? (
         <div className="empty-state">No inspections conducted yet.</div>
       ) : (
@@ -27,6 +35,7 @@ const InspectionTable = ({ inspections }) => {
                 <th>Defect Type</th>
                 <th>Confidence</th>
                 <th>Visuals</th>
+                {isAdmin && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -73,6 +82,18 @@ const InspectionTable = ({ inspections }) => {
                       <span className="text-muted">No Image</span>
                     )}
                   </td>
+                  {isAdmin && (
+                    <td>
+                      <button
+                        onClick={() => onDeleteInspection(ins.id)}
+                        className="btn-delete"
+                        title="Delete Inspection Record"
+                      >
+                        <Trash2 className="view-icon" />
+                        <span>Delete</span>
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -112,3 +133,4 @@ const InspectionTable = ({ inspections }) => {
 };
 
 export default InspectionTable;
+
