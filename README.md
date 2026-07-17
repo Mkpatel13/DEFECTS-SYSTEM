@@ -117,6 +117,9 @@ npm start
 
 ---
 
+admin
+admin123
+
 ## defect-inspection-system APIs
 * **FastAPI documentation**: `http://localhost:8000/docs` (Swagger UI)
 * **Spring Boot endpoint stats**: `http://localhost:8081/api/inspections/stats` (JSON)
