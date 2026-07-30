@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8081/api";
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port === '3000' ? "http://localhost:8081/api" : "/api");
 
 export const fetchProducts = async () => {
   const response = await fetch(`${BASE_URL}/products`);

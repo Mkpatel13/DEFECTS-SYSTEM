@@ -115,7 +115,7 @@ const InspectionTable = ({ inspections, isAdmin, onDeleteInspection, onClearHist
               <img
                 src={
                   activeImage.startsWith("detected_images") 
-                    ? `http://localhost:8000/${activeImage}` 
+                    ? `${process.env.REACT_APP_AI_SERVICE_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' && window.location.port === '3000' ? "http://localhost:8000" : "")}/${activeImage}` 
                     : activeImage
                 }
                 alt="PCB Defect Detail"
