@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Cpu, Shield, Lock, LogOut, X } from 'lucide-react';
+import { RefreshCw, Cpu, Shield, Lock, LogOut, X, Sun, Moon } from 'lucide-react';
 import { fetchInspections, fetchDashboardStats, loginAdmin, deleteInspection, clearInspectionHistory } from './api/inspectionApi';
 import StatsCards from './components/StatsCards';
 import UploadForm from './components/UploadForm';
@@ -18,10 +18,21 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [inspections, setInspections] = useState([]);
   const [stats, setStats] = useState({ totalInspected: 0, defectiveCount: 0, defectRate: 0, defectDistribution: {} });
   const [loading, setLoading] = useState(false);
   const [systemOnline, setSystemOnline] = useState(true);
+
+  // Synchronize document theme attribute
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Admin Portal state & handlers
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('adminToken') !== null);
@@ -111,16 +122,23 @@ function App() {
   const labels = Object.keys(distData).map(k => k.replace('_', ' '));
   const dataValues = Object.values(distData);
 
+  const isDarkMode = theme === 'dark';
+  const barBg = isDarkMode ? 'rgba(255, 69, 58, 0.75)' : 'rgba(255, 59, 48, 0.75)';
+  const barBorder = isDarkMode ? '#ff453a' : '#ff3b30';
+  const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = isDarkMode ? '#86868b' : '#6e6e73';
+  const titleColor = isDarkMode ? '#f5f5f7' : '#1d1d1f';
+
   const chartData = {
     labels: labels.length > 0 ? labels : ['No Defects'],
     datasets: [
       {
         label: 'Defect Counts',
         data: dataValues.length > 0 ? dataValues : [0],
-        backgroundColor: 'rgba(244, 63, 94, 0.6)',
-        borderColor: 'rgba(244, 63, 94, 1)',
+        backgroundColor: barBg,
+        borderColor: barBorder,
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 8,
       },
     ],
   };
@@ -135,30 +153,36 @@ function App() {
       title: {
         display: true,
         text: 'Defect Type Classification',
-        color: '#94a3b8',
+        color: titleColor,
         font: {
-          family: 'Inter',
+          family: '-apple-system, BlinkMacSystemFont, SF Pro Display, Inter, sans-serif',
           size: 14,
-          weight: '500',
+          weight: '600',
         },
       },
     },
     scales: {
       x: {
         grid: {
-          color: 'rgba(51, 65, 85, 0.3)',
+          color: gridColor,
         },
         ticks: {
-          color: '#94a3b8',
+          color: textColor,
+          font: {
+            family: '-apple-system, BlinkMacSystemFont, SF Pro Display, Inter, sans-serif',
+          }
         },
       },
       y: {
         grid: {
-          color: 'rgba(51, 65, 85, 0.3)',
+          color: gridColor,
         },
         ticks: {
-          color: '#94a3b8',
+          color: textColor,
           stepSize: 1,
+          font: {
+            family: '-apple-system, BlinkMacSystemFont, SF Pro Display, Inter, sans-serif',
+          }
         },
       },
     },
@@ -169,22 +193,40 @@ function App() {
       {/* Header */}
       <header className="header">
         <div className="brand">
-          <Cpu className="brand-logo" />
+          <div className="brand-icon-wrapper">
+            <Cpu className="brand-logo" />
+          </div>
           <div>
             <h1 className="brand-title">PCB Defect Inspection System</h1>
-            <p className="brand-sub">Real-Time Automated PCB Defect Inspection using YOLOv8 & Spring Boot</p>
+            <p className="brand-sub">Automated Quality Control powered by YOLOv8 & Deep Learning</p>
           </div>
         </div>
+        
         <div className="header-status">
           <span className={`status-badge ${systemOnline ? 'status-badge-online' : 'status-badge-offline'}`}>
-            {systemOnline ? 'YOLOv8 Engine Online' : 'Inspection Backend Offline'}
+            <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: systemOnline ? 'var(--success-green)' : 'var(--danger-red)', display: 'inline-block' }}></span>
+            {systemOnline ? 'YOLOv8 Engine Online' : 'Backend Offline'}
           </span>
+
+          <button onClick={toggleTheme} className="theme-toggle-btn" title="Toggle Light / Dark Mode">
+            {isDarkMode ? (
+              <>
+                <Sun className="theme-icon" />
+                <span>Light</span>
+              </>
+            ) : (
+              <>
+                <Moon className="theme-icon" />
+                <span>Dark</span>
+              </>
+            )}
+          </button>
           
           {isAdmin ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span className="admin-badge">
                 <Shield className="badge-icon" />
-                Admin Portal
+                Admin
               </span>
               <button onClick={handleAdminLogout} className="btn-admin btn-admin-logout" title="Exit Admin Mode">
                 <LogOut className="badge-icon" />
@@ -199,7 +241,7 @@ function App() {
           )}
 
           <button onClick={loadData} disabled={loading} className="btn-refresh" title="Refresh Dashboard">
-            <RefreshCw className={`refresh-icon-spin ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`refresh-icon-spin ${loading ? 'animate-spin' : ''}`} style={{ width: '16px', height: '16px' }} />
           </button>
         </div>
       </header>
@@ -240,20 +282,20 @@ function App() {
       {/* Admin Login Modal */}
       {showLoginModal && (
         <div className="modal-overlay" onClick={() => { setShowLoginModal(false); setLoginError(''); }}>
-          <div className="modal-content" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content" style={{ maxWidth: '420px' }} onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Shield className="brand-logo" style={{ height: '24px', width: '24px', color: '#3b82f6' }} />
-                <h3 style={{ margin: 0, fontSize: '16px' }}>Admin Authentication</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Shield style={{ height: '22px', width: '22px', color: 'var(--accent-apple)' }} />
+                <h3>Admin Authentication</h3>
               </div>
               <button className="modal-close" onClick={() => { setShowLoginModal(false); setLoginError(''); }}>
                 <X className="close-icon" />
               </button>
             </div>
             <form onSubmit={handleAdminLogin}>
-              <div className="modal-body" style={{ flexDirection: 'column', gap: '16px', background: '#121824', padding: '24px', display: 'flex' }}>
+              <div className="modal-body" style={{ flexDirection: 'column', gap: '16px', display: 'flex' }}>
                 {loginError && (
-                  <div className="alert alert-error" style={{ width: '100%', marginBottom: 0, boxSizing: 'border-box' }}>
+                  <div className="alert alert-error" style={{ width: '100%', marginBottom: 0 }}>
                     {loginError}
                   </div>
                 )}
@@ -282,7 +324,7 @@ function App() {
                   />
                 </div>
 
-                <button type="submit" disabled={authLoading} className="btn-submit" style={{ marginTop: '8px', width: '100%' }}>
+                <button type="submit" disabled={authLoading} className="btn-submit" style={{ marginTop: '8px' }}>
                   {authLoading ? 'Verifying...' : 'Login to Admin'}
                 </button>
               </div>
@@ -295,3 +337,4 @@ function App() {
 }
 
 export default App;
+

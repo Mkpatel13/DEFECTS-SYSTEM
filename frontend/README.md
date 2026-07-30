@@ -3,12 +3,12 @@
 This is the frontend dashboard that serves as the operator panel for running real-time PCB quality checks and monitoring line defect analytics.
 
 ## Features
-- Drag-and-drop or file upload selection for PCB board images.
-- Integrates with the Spring Boot backend service.
-- Visual display cards tracking Inspected Count, Defect Count, and Rate.
-- Live data logging table showing inspection history with defect-type badges.
-- Image modal viewer rendering annotated bounding boxes served dynamically.
-- Interactive defect distribution chart built via Chart.js.
+- **Apple-Inspired Design**: Sleek glassmorphism acrylic cards, SF Pro typography, smooth micro-interactions, and premium Apple color palettes.
+- **Light & Dark Mode Switch**: Toggle between Apple Dark (obsidian `#000000`) and Light (`#f5f5f7`) modes with preference saved in `localStorage`.
+- **Drag-and-Drop Upload**: File selection for PCB board images with visual dropzone states.
+- **YOLOv8 & Backend Integration**: Connects with Spring Boot and FastAPI AI microservice.
+- **Dynamic Chart Analytics**: Defect distribution bar chart using Chart.js with theme-adaptive colors and typography.
+- **Inspection History Table & Modal**: Live data table with badge statuses, Admin deletion capabilities, and annotated bounding box modal viewer.
 
 ## Setup Instructions
 

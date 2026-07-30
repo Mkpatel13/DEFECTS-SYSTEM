@@ -125,6 +125,8 @@ admin123
 * **Spring Boot endpoint stats**: `http://localhost:8081/api/inspections/stats` (JSON)
 
 ---
+admin
+admin123
 
 ## License
 
