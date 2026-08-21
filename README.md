@@ -128,10 +128,35 @@ admin123
 * **Spring Boot endpoint stats**: `http://localhost:8081/api/inspections/stats` (JSON)
 
 ---
+
+admin
+admin123
+
+## PCB Defect Inspection Simulator (Unity)
+
+A Unity-based 3D simulation of the PCB inspection line, located at the repository root (`Assets/`, `Packages/`, `ProjectSettings/`). Open it with Unity (URP).
+
+### Project Structure Overview
+
+The `Assets/` directory is organized as follows to maintain a clean and scalable project structure:
+
+- **Scenes/**: Contains the Unity scene files (e.g., `MainScene.unity`).
+- **Scripts/**: All C# scripts for the project, categorized by functionality:
+  - **AI/**: YOLOv8 inspection simulator logic and defect databases.
+  - **Conveyor/**: Conveyor belt, PCB spawning, and reject actuator control.
+  - **Inspection/**: Inspection cameras, lighting, and inspection manager.
+  - **Integration/**: FastAPI / Spring Boot API clients and operator station control.
+  - **Sensors/**: IR sensors, stoppers, and inspection zone controllers.
+  - **UI/**: Dashboards, debug panels, and machine focus controllers.
+- **Prefabs/**: Reusable GameObject configurations (machines, PCBs, conveyor, server racks).
+- **Materials/**: Materials used to texture 3D models and UI elements.
+- **Settings/**: URP render pipeline assets and quality settings.
+
+### Admin Credentials
+
 admin
 admin123
 
 ## License
 
 Copyright (C) 2026 Satyam Adhav. All rights reserved.
-

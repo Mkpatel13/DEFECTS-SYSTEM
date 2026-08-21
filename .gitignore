@@ -45,13 +45,43 @@ frontend/.env.development.local
 frontend/.env.test.local
 frontend/.env.production.local
 
-# IDEs & System files
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Uu]serSettings/
+[Rr]ollbackBackup/
+MemoryCaptures/
+
+# Never ignore asset meta data
+![Aa]ssets/**/*.meta
+
+# IDE / editor
+.vs/
 .idea/
 .vscode/
+*.csproj
+*.sln
+*.slnx
+*.user
+*.pidb
+*.booproj
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
+*.swp
+
+# OS files
 .DS_Store
 Thumbs.db
+
+# Builds
+*.apk
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
