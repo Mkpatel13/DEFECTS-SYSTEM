@@ -1,0 +1,37 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Rr]ollbackBackup/
+MemoryCaptures/
+
+# Never ignore asset meta data
+![Aa]ssets/**/*.meta
+
+# IDE / editor
+.vs/
+.idea/
+*.csproj
+*.sln
+*.slnx
+*.user
+*.pidb
+*.booproj
+*.suo
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Builds
+*.apk
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
