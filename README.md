@@ -84,6 +84,7 @@ Make sure you have the following installed on your machine:
 Navigate to the `ai_service` folder, activate the virtual environment, install requirements, and run the FastAPI server:
 
 ```bash
+cd Autonomus-defect-detection-system
 cd ai_service
 pip install -r requirements.txt
 # Start the server (loads models/best.pt)
@@ -98,6 +99,7 @@ uvicorn app.main:app --reload --port 8000
 2. Run the application using Maven:
 
 ```bash
+cd Autonomus-defect-detection-system
 cd backend
 mvn clean spring-boot:run
 ```
@@ -109,6 +111,7 @@ mvn clean spring-boot:run
 Navigate to the `frontend` folder, install npm dependencies, and launch the server:
 
 ```bash
+cd Autonomus-defect-detection-system
 cd frontend
 npm install
 npm start

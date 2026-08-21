@@ -2,6 +2,7 @@ package com.defectinspection.service;
 
 import com.defectinspection.dto.AiPredictionResponse;
 import com.defectinspection.dto.DashboardStats;
+import com.defectinspection.dto.InspectionResultDto;
 import com.defectinspection.entity.Inspection;
 import com.defectinspection.entity.Product;
 import com.defectinspection.repository.InspectionRepository;
@@ -77,6 +78,21 @@ public class InspectionService {
                 ? prediction.getDetectedImagePath() 
                 : "uploaded_images/" + file.getOriginalFilename();
         inspection.setImagePath(path);
+
+        return inspectionRepository.save(inspection);
+    }
+
+    public Inspection saveInspectionResult(InspectionResultDto dto) {
+        Product product = productRepository.findById(dto.getProductId())
+                .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + dto.getProductId()));
+
+        Inspection inspection = new Inspection();
+        inspection.setProduct(product);
+        inspection.setPcbId(dto.getPcbId());
+        inspection.setIsDefective(dto.getIsDefective());
+        inspection.setDefectType(dto.getDefectType());
+        inspection.setConfidence(dto.getConfidence());
+        inspection.setImagePath(dto.getImagePath());
 
         return inspectionRepository.save(inspection);
     }

@@ -1,6 +1,7 @@
 package com.defectinspection.controller;
 
 import com.defectinspection.dto.DashboardStats;
+import com.defectinspection.dto.InspectionResultDto;
 import com.defectinspection.entity.Inspection;
 import com.defectinspection.entity.Product;
 import com.defectinspection.repository.ProductRepository;
@@ -38,6 +39,19 @@ public class InspectionController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to complete inspection: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/inspections/save-result")
+    public ResponseEntity<?> saveInspectionResult(@RequestBody InspectionResultDto dto) {
+        try {
+            Inspection inspection = inspectionService.saveInspectionResult(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(inspection);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to save inspection result: " + e.getMessage());
         }
     }
 

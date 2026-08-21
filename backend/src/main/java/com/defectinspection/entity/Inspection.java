@@ -21,6 +21,9 @@ public class Inspection {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(name = "pcb_id", length = 50)
+    private String pcbId;
+
     @Column(name = "image_path", length = 500)
     private String imagePath;
 
