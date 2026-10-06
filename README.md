@@ -159,4 +159,4 @@ admin123
 
 ## License
 
-Copyright (C) 2026 Satyam Adhav. All rights reserved.
+Copyright (C) 2026 Meet Ghodasara. All rights reserved.
